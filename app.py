@@ -1,6 +1,8 @@
 import gradio as gr
 import traceback
 
+from html_parser import html_parse
+
 
 def hello_world_fn(username: str) -> tuple[str, str]:
     try:
@@ -31,6 +33,18 @@ def main() -> None:
             btn = gr.Button("开始转换")
             btn.click(
                 fn=hello_world_fn,
+                inputs=raw_input,
+                outputs=[pack_output, status_output],
+            )
+
+        with gr.Tab("html parser"):
+            raw_input = gr.Textbox(lines=1, placeholder="输入需要提取的文本", label="")
+            pack_output = gr.Textbox(label="输出")
+            status_output = gr.Textbox(label="状态信息")
+
+            btn = gr.Button("开始转换")
+            btn.click(
+                fn=html_parse,
                 inputs=raw_input,
                 outputs=[pack_output, status_output],
             )
